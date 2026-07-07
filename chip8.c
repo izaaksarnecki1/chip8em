@@ -1,7 +1,9 @@
 #include "chip8.h"
+#include <exception>
 #include <stddef.h>
 #include <stdint.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 static const uint8_t fontset[] = {
@@ -40,4 +42,19 @@ void chip8_init(chip8 *c) {
   // initially, program counter is at the start START_ADDR
   // when ROM is loaded, the first op will live at START_ADDR
   c->pc = START_ADDR;
+}
+
+int chip8_load_rom(chip8 *c, const char *filename) {
+  FILE *file;
+  file = fopen(filename, "rb");
+  if (file == NULL) {
+    fprintf(stderr, "Failed opening file");
+    return 1;
+  }
+
+  for (int i = 0; i < ...; i++) {
+    c->memory[START_ADDR + i] = file[i];
+  }
+
+  fclose(file);
 }

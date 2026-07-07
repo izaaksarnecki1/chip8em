@@ -20,11 +20,13 @@ typedef struct {
   uint8_t delay_timer;
   uint8_t sound_timer;
   uint8_t keypad[NUM_INPUT_KEYS];
+  uint16_t opcode;
   uint32_t videobuffer[VIDEO_WIDTH * VIDEO_HEIGHT]; // use 32bit for sdl
                                                     // compatability later on
-  uint16_t opcode;
 } chip8;
 
 void chip8_init(chip8 *c);
+
+int chip8_load_rom(chip8 *c, const char *filename);
 
 #endif // CHIP8_H
