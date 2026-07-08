@@ -1,5 +1,5 @@
 #include "chip8.h"
-#include <exception>
+#include <assert.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -45,16 +45,26 @@ void chip8_init(chip8 *c) {
 }
 
 int chip8_load_rom(chip8 *c, const char *filename) {
+  // Open the file, point *file to the start of the file.
+  // ROMs are binary files, so we rb them.
   FILE *file;
   file = fopen(filename, "rb");
   if (file == NULL) {
-    fprintf(stderr, "Failed opening file");
-    return 1;
+    fprintf(stderr, "Failed opening file: %s", filename);
+    return -1;
   }
 
-  for (int i = 0; i < ...; i++) {
-    c->memory[START_ADDR + i] = file[i];
-  }
+  size_t capacity = sizeof(c->memory) - START_ADDR;
+  // read the rom file into memory of the chip.
+  size_t bytes_read =
+      fread(c->memory + START_ADDR, 1, sizeof(c->memory) - 1, file);
 
   fclose(file);
+
+  if (bytes_read == 0) {
+    fprintf(stderr, "Provided rom is empty. Read 0 bytes.\n");
+    return -1;
+  }
+
+  return bytes_read;
 }
