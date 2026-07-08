@@ -56,8 +56,7 @@ int chip8_load_rom(chip8 *c, const char *filename) {
 
   size_t capacity = sizeof(c->memory) - START_ADDR;
   // read the rom file into memory of the chip.
-  size_t bytes_read =
-      fread(c->memory + START_ADDR, 1, sizeof(c->memory) - 1, file);
+  size_t bytes_read = fread(c->memory + START_ADDR, 1, capacity, file);
 
   fclose(file);
 
