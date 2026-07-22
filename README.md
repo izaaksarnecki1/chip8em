@@ -28,13 +28,13 @@ Currently, no display is wired up, so the only way to see the output is to print
 <img width="806" height="615" alt="image" src="https://github.com/user-attachments/assets/715aff44-4a1b-4131-9f94-5d17cbf75639" />
 
 ## Future work
-1. **Cycle Loop** - impl an actual cycle loop in `main`
-2. **SDL Window** - get an acutal window up and running, init a renderer, impl a basic event loop
-3. **Render videobuffer** - display videobuffer in each frame
-4. **Decouple timing** - Seperate  CPU speed, 60hz timers and 60hz display
-5. **Input** - map keyboard buttons to keypad array and connect them to sdl events.
-6. **Implement remaining opcodes**
-7. **Timers and sound** - decreement delay and sound timers, and a sound
+- [x] **Cycle Loop** - impl an actual cycle loop in `main`\
+- [ ] **SDL Window** - get an acutal window up and running, init a renderer, impl a basic event loop
+- [ ] **Render videobuffer** - display videobuffer in each frame
+- [ ] **Decouple timing** - Seperate  CPU speed, 60hz timers and 60hz display
+- [ ] **Input** - map keyboard buttons to keypad array and connect them to sdl events.
+- [ ] **Implement remaining opcodes**
+- [ ] **Timers and sound** - decreement delay and sound timers, and a sound
 
 
 
