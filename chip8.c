@@ -148,9 +148,15 @@ void OP_DXYN(chip8 *c, uint8_t x, uint8_t y, uint8_t n) {
 
   c->registers[0xF] = 0;
   for (uint8_t row = 0; row < n; row++) {
+    if (y_coord + row >= VIDEO_HEIGHT)
+      break;
+
     uint8_t sprite_data = c->memory[c->index_reg + row];
 
     for (uint8_t col = 0; col < 8; col++) {
+      if (x_coord + col >= VIDEO_WIDTH)
+        break;
+
       uint8_t sprite_pixel = sprite_data & (0x80 >> col);
       uint32_t *screen_pixel =
           &c->videobuffer[(y_coord + row) * VIDEO_WIDTH + (x_coord + col)];
