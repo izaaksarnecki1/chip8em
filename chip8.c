@@ -106,15 +106,6 @@ int chip8_cycle(chip8 *c) {
   return 0;
 }
 
-void chip8_dump_display(const chip8 *c) {
-  for (int row = 0; row < VIDEO_HEIGHT; row++) {
-    for (int col = 0; col < VIDEO_WIDTH; col++) {
-      putchar(c->videobuffer[row * VIDEO_WIDTH + col] ? '#' : ' ');
-    }
-    putchar('\n');
-  }
-}
-
 void OP_00E0(chip8 *c) {
   // clears display
   memset(c->videobuffer, 0, VIDEO_WIDTH * VIDEO_HEIGHT * sizeof(uint32_t));
