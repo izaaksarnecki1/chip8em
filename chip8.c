@@ -162,11 +162,10 @@ void OP_DXYN(chip8 *c, uint8_t x, uint8_t y, uint8_t n) {
           &c->videobuffer[(y_coord + row) * VIDEO_WIDTH + (x_coord + col)];
 
       if (sprite_pixel) {
-        if (*screen_pixel == 0xFFFFFFFF) {
-          // both on, set VF to 1
+        if (*screen_pixel) {
           c->registers[0xF] = 1;
         }
-        *screen_pixel ^= sprite_pixel;
+        *screen_pixel ^= 0xFFFFFFFF;
       }
     }
   }
