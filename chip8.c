@@ -106,15 +106,6 @@ int chip8_cycle(chip8 *c) {
   return 0;
 }
 
-void chip8_dump_display(const chip8 *c) {
-  for (int row = 0; row < VIDEO_HEIGHT; row++) {
-    for (int col = 0; col < VIDEO_WIDTH; col++) {
-      putchar(c->videobuffer[row * VIDEO_WIDTH + col] ? '#' : ' ');
-    }
-    putchar('\n');
-  }
-}
-
 void OP_00E0(chip8 *c) {
   // clears display
   memset(c->videobuffer, 0, VIDEO_WIDTH * VIDEO_HEIGHT * sizeof(uint32_t));
@@ -162,11 +153,10 @@ void OP_DXYN(chip8 *c, uint8_t x, uint8_t y, uint8_t n) {
           &c->videobuffer[(y_coord + row) * VIDEO_WIDTH + (x_coord + col)];
 
       if (sprite_pixel) {
-        if (*screen_pixel == 0xFFFFFFFF) {
-          // both on, set VF to 1
+        if (*screen_pixel) {
           c->registers[0xF] = 1;
         }
-        *screen_pixel ^= sprite_pixel;
+        *screen_pixel ^= 0xFFFFFFFF;
       }
     }
   }

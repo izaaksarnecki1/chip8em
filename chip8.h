@@ -31,8 +31,6 @@ int chip8_load_rom(chip8 *c, const char *filename);
 
 int chip8_cycle(chip8 *c);
 
-void chip8_dump_display(const chip8 *c);
-
 // ------- OPS -------
 void OP_00E0(chip8 *c);
 
