@@ -1,5 +1,5 @@
 CC       := gcc
-CFLAGS   := -std=c11 -Wall -Wextra -Wpedantic -Wshadow -g -O0 -fsanitize=address,undefined
+CFLAGS   := -std=c17 -Wall -Wextra -Wpedantic -Wshadow -g -O0 -fsanitize=address,undefined
 
 BACKEND    ?= term
 
