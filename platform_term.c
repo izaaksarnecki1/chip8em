@@ -1,16 +1,17 @@
+#define _POSIX_C_SOURCE 199309L
+
 #include "platform.h"
 #include <signal.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 struct platform {
   bool cursor_hidden;
 };
 
-// Set to 0 by the SIGINT handler so ctrl C breaks out of the loop
-// without volatile, this breaks at O2 and is compiled to a noop
 static volatile sig_atomic_t want_quit = 0;
 
 static void handle_sigint(int sig) {
@@ -21,7 +22,6 @@ static void handle_sigint(int sig) {
 platform *platform_create(const char *title, int scale) {
   (void)title;
   (void)scale;
-  // clears screen and hides cursor. only needed for temrinal
   platform *p = malloc(sizeof(*p));
 
   if (!p) {
@@ -67,4 +67,16 @@ void platform_beep(platform *p, bool on) {
   (void)p;
   (void)on;
   // noop
+}
+
+uint64_t platform_now_ns(void) {
+  struct timespec ts;
+  clock_gettime(CLOCK_MONOTONIC, &ts);
+  return (uint64_t)ts.tv_sec * 1000000000ULL + (uint64_t)ts.tv_nsec;
+}
+
+void platform_sleep_ns(uint64_t ns) {
+  struct timespec ts = {(time_t)(ns / 1000000000ULL),
+                        (long)(ns % 1000000000ULL)};
+  nanosleep(&ts, NULL);
 }

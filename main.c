@@ -1,17 +1,10 @@
 #include "chip8.h"
 #include "platform.h"
+#include <stdint.h>
 #include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
 
 #define CYCLES_PER_FRAME 16
-#define FRAME_NS (1000000000L / 60)
-
-static long now_ns(void) {
-  struct timespec ts;
-  clock_gettime(CLOCK_MONOTONIC, &ts);
-  return ts.tv_sec * 1000000000L + ts.tv_nsec;
-}
+#define FRAME_NS (1000000000ULL / 60)
 
 int main(int argc, char *argv[]) {
   const char *filename;
@@ -36,7 +29,7 @@ int main(int argc, char *argv[]) {
   }
 
   while (platform_poll(p, chip.keypad)) {
-    long frame_start = now_ns();
+    uint64_t frame_start = platform_now_ns();
 
     for (int i = 0; i < CYCLES_PER_FRAME; i++)
       chip8_cycle(&chip);
@@ -49,11 +42,9 @@ int main(int argc, char *argv[]) {
     platform_present(p, chip.videobuffer, VIDEO_WIDTH, VIDEO_HEIGHT);
     platform_beep(p, chip.sound_timer > 0);
 
-    long remaining = FRAME_NS - (now_ns() - frame_start);
-    if (remaining > 0) {
-      struct timespec ts = {remaining / 1000000000L, remaining % 1000000000L};
-      nanosleep(&ts, NULL);
-    }
+    uint64_t elapsed = platform_now_ns() - frame_start;
+    if (elapsed < FRAME_NS)
+      platform_sleep_ns(FRAME_NS - elapsed);
   }
   platform_destroy(p);
 
