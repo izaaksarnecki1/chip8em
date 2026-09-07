@@ -23,14 +23,14 @@ The available instructions are:
 
 ## Example output
 
-Currently, no display is wired up, so the only way to see the output is to print it in the terminal. So far, running the IBM_logo ROM outputs:
+A simple display is built with SDL2. This example is running IBM_log.ch8.
 
-<img width="806" height="615" alt="image" src="https://github.com/user-attachments/assets/715aff44-4a1b-4131-9f94-5d17cbf75639" />
+<img width="647" height="350" alt="image" src="https://github.com/user-attachments/assets/9e2fc19c-11a3-4709-914c-5af9e18d2417" />
 
 ## Future work
 - [x] **Cycle Loop** - impl an actual cycle loop in `main`\
-- [ ] **SDL Window** - get an acutal window up and running, init a renderer, impl a basic event loop
-- [ ] **Render videobuffer** - display videobuffer in each frame
+- [x] **SDL Window** - get an acutal window up and running, init a renderer, impl a basic event loop
+- [x] **Render videobuffer** - display videobuffer in each frame
 - [ ] **Decouple timing** - Seperate  CPU speed, 60hz timers and 60hz display
 - [ ] **Input** - map keyboard buttons to keypad array and connect them to sdl events.
 - [ ] **Implement remaining opcodes**
