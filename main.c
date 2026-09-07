@@ -22,7 +22,7 @@ int main(int argc, char *argv[]) {
   chip8_init(&chip);
   chip8_load_rom(&chip, filename);
 
-  platform *p = platform_create("chip8", 1);
+  platform *p = platform_create("chip8", 10);
   if (!p) {
     fprintf(stderr, "Couldn't create platform. Exiting");
     return 1;
