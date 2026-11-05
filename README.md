@@ -31,7 +31,7 @@ A simple display is built with SDL2. This example is running IBM_log.ch8.
 - [x] **Cycle Loop** - impl an actual cycle loop in `main`\
 - [x] **SDL Window** - get an acutal window up and running, init a renderer, impl a basic event loop
 - [x] **Render videobuffer** - display videobuffer in each frame
-- [ ] **Decouple timing** - Seperate  CPU speed, 60hz timers and 60hz display
+- [x] **Decouple timing** - Seperate  CPU speed, 60hz timers and 60hz display
 - [ ] **Input** - map keyboard buttons to keypad array and connect them to sdl events.
 - [ ] **Implement remaining opcodes**
 - [ ] **Timers and sound** - decreement delay and sound timers, and a sound
