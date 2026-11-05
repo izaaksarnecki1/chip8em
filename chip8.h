@@ -3,6 +3,7 @@
 
 #define NUM_REGISTERS 16
 #define MEM_SIZE 4096
+#define MEM_MASK (MEM_SIZE - 1)
 #define STACK_SIZE 16
 #define NUM_INPUT_KEYS 16
 #define VIDEO_WIDTH 64

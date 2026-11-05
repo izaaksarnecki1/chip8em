@@ -50,7 +50,7 @@ int chip8_load_rom(chip8 *c, const char *filename) {
   FILE *file;
   file = fopen(filename, "rb");
   if (file == NULL) {
-    fprintf(stderr, "Failed opening file: %s", filename);
+    fprintf(stderr, "Failed opening file: %s\n", filename);
     return -1;
   }
 
@@ -70,8 +70,9 @@ int chip8_load_rom(chip8 *c, const char *filename) {
 
 int chip8_cycle(chip8 *c) {
   // fetch
-  c->opcode = (c->memory[c->pc] << 8) | c->memory[c->pc + 1];
-  c->pc += 2;
+  c->pc &= MEM_MASK;
+  c->opcode = (c->memory[c->pc] << 8) | c->memory[(c->pc + 1) & MEM_MASK];
+  c->pc = (c->pc + 2) & MEM_MASK;
 
   // decode
   uint16_t nnn = c->opcode & 0x0FFF;     // lowest 12 bits
@@ -99,6 +100,11 @@ int chip8_cycle(chip8 *c) {
     break;
   case 0xD:
     OP_DXYN(c, x, y, n);
+    break;
+  default:
+    fprintf(stderr, "unknown opcode 0x%04X at 0x%03X\n", c->opcode,
+            (c->pc - 2) & MEM_MASK);
+    return -1;
   }
 
   // printf("opcode=0x%04X  nnn=0x%03X  n=0x%X  x=0x%X  y=0x%X  kk=0x%02X\n",
@@ -142,7 +148,7 @@ void OP_DXYN(chip8 *c, uint8_t x, uint8_t y, uint8_t n) {
     if (y_coord + row >= VIDEO_HEIGHT)
       break;
 
-    uint8_t sprite_data = c->memory[c->index_reg + row];
+    uint8_t sprite_data = c->memory[(c->index_reg + row) & MEM_MASK];
 
     for (uint8_t col = 0; col < 8; col++) {
       if (x_coord + col >= VIDEO_WIDTH)

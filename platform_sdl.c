@@ -106,4 +106,6 @@ uint64_t platform_now_ns(void) {
          ((counter % freq) * 1000000000ULL) / freq;
 }
 
-void platform_sleep_ns(uint64_t ns) { SDL_Delay((Uint32)(ns / 1000000ULL)); }
+void platform_sleep_ns(uint64_t ns) {
+  SDL_Delay((Uint32)((ns + 999999ULL) / 1000000ULL));
+}
