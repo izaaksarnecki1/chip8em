@@ -33,16 +33,16 @@ int chip8_load_rom(chip8 *c, const char *filename);
 int chip8_cycle(chip8 *c);
 
 // ------- OPS -------
-void OP_00E0(chip8 *c);
+static void OP_00E0(chip8 *c);
 
-void OP_1NNN(chip8 *c, uint16_t nnn);
+static void OP_1NNN(chip8 *c, uint16_t nnn);
 
-void OP_6XNN(chip8 *c, uint8_t x, uint8_t kk);
+static void OP_6XNN(chip8 *c, uint8_t x, uint8_t kk);
 
-void OP_7XNN(chip8 *c, uint8_t x, uint8_t kk);
+static void OP_7XNN(chip8 *c, uint8_t x, uint8_t kk);
 
-void OP_ANNN(chip8 *c, uint16_t nnn);
+static void OP_ANNN(chip8 *c, uint16_t nnn);
 
-void OP_DXYN(chip8 *c, uint8_t x, uint8_t y, uint8_t n);
+static void OP_DXYN(chip8 *c, uint8_t x, uint8_t y, uint8_t n);
 
 #endif // CHIP8_H
